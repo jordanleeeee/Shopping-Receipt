@@ -1,4 +1,7 @@
 # Pinnacle Code Test
+This is a java implementation of the Shopping Receipt Backend Code test, import this project 
+as maven project and play it around.
+<br />
 
 This program use .csv file as input. 
 product name, price, quantity and location of the purchase are specified in the csv 
