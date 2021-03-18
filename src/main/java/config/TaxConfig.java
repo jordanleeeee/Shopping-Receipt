@@ -7,7 +7,7 @@ import utils.FileUtils;
 import java.util.*;
 
 public class TaxConfig {
-    public static TaxConfig instance = null;
+    private static TaxConfig instance = null;
     private static final String configFileLocation = "conf.json";
     private final Map<String, String> itemCategoryMap = new HashMap<>();
     private final HashMap<String, Map<String, Double>> taxRateMap = new HashMap<>();
