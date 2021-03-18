@@ -1,0 +1,19 @@
+{
+  "categoriesMap": {
+    "potato chips": "food",
+    "shirt":  "clothing",
+    "book": "others",
+    "pencils": "others"
+  },
+  "taxRate": {
+    "CA": {
+      "food": 0.0,
+      "default": 0.0975
+    },
+    "NY": {
+      "food": 0.0,
+      "clothing": 0.0,
+      "default": 0.08875
+    }
+  }
+}

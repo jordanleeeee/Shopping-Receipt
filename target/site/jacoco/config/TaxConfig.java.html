@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TaxConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CodeTest</a> &gt; <a href="index.source.html" class="el_package">config</a> &gt; <span class="el_source">TaxConfig.java</span></div><h1>TaxConfig.java</h1><pre class="source lang-java linenums">package config;
+
+import org.json.simple.JSONObject;
+import org.jetbrains.annotations.NotNull;
+import utils.FileUtils;
+
+import java.util.*;
+
+public class TaxConfig {
+<span class="fc" id="L10">    public static TaxConfig instance = null;</span>
+    private static final String configFileLocation = &quot;conf.json&quot;;
+<span class="fc" id="L12">    private final Map&lt;String, String&gt; itemCategoryMap = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L13">    private final HashMap&lt;String, Map&lt;String, Double&gt;&gt; taxRateMap = new HashMap&lt;&gt;();</span>
+
+    public static TaxConfig getInstance(){
+<span class="fc bfc" id="L16" title="All 2 branches covered.">        if(instance == null){</span>
+<span class="fc" id="L17">            instance = new TaxConfig();</span>
+        }
+<span class="fc" id="L19">        return instance;</span>
+    }
+<span class="fc" id="L21">    private TaxConfig(){</span>
+<span class="fc" id="L22">        JSONObject configDetails = FileUtils.readJSONFile(configFileLocation);</span>
+        //Load data to program
+<span class="fc" id="L24">        loadProductCategories(configDetails);</span>
+<span class="fc" id="L25">        loadTaxRateMap(configDetails);</span>
+<span class="fc" id="L26">    }</span>
+
+    private void loadProductCategories(JSONObject configDetails){
+        try {
+<span class="fc" id="L30">            JSONObject categoriesMap = (JSONObject)configDetails.get(&quot;categoriesMap&quot;);</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">            for (Object productName : categoriesMap.keySet()) {</span>
+<span class="fc" id="L32">                String productCategories = (String) categoriesMap.get(productName);</span>
+<span class="fc" id="L33">                itemCategoryMap.put((String) productName, productCategories);</span>
+<span class="fc" id="L34">            }</span>
+<span class="nc" id="L35">        } catch (ClassCastException e){</span>
+<span class="nc" id="L36">            System.err.println(&quot;invalid config file data&quot;);</span>
+<span class="nc" id="L37">            System.exit(-1);</span>
+<span class="nc" id="L38">        } catch (NullPointerException e){</span>
+<span class="nc" id="L39">            System.err.println(&quot;missing data \&quot;categories\&quot; in config file&quot;);</span>
+<span class="nc" id="L40">            System.exit(-1);</span>
+<span class="pc" id="L41">        }</span>
+<span class="fc" id="L42">    }</span>
+
+    private void loadTaxRateMap(JSONObject configDetails){
+        try {
+<span class="fc" id="L46">            JSONObject taxRateDetails = (JSONObject)configDetails.get(&quot;taxRate&quot;);</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">            for(Object locationTaxDetails: taxRateDetails.keySet()){</span>
+<span class="fc" id="L48">                Map&lt;String, Double&gt; taxMap = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L49">                JSONObject categoriesTaxMapping = (JSONObject)taxRateDetails.get(locationTaxDetails);</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">                for(Object category: categoriesTaxMapping.keySet()){</span>
+<span class="fc" id="L51">                    taxMap.put((String)category, (Double)categoriesTaxMapping.get(category));</span>
+<span class="fc" id="L52">                }</span>
+<span class="fc" id="L53">                taxRateMap.put((String)locationTaxDetails, taxMap);</span>
+<span class="fc" id="L54">            }</span>
+<span class="nc" id="L55">        } catch (ClassCastException e){</span>
+<span class="nc" id="L56">            System.err.println(&quot;invalid config file data&quot;);</span>
+<span class="nc" id="L57">            System.exit(-1);</span>
+<span class="nc" id="L58">        } catch (NullPointerException e){</span>
+<span class="nc" id="L59">            System.err.println(&quot;missing data \&quot;taxRate\&quot; in config file&quot;);</span>
+<span class="nc" id="L60">            System.exit(-1);</span>
+<span class="pc" id="L61">        }</span>
+<span class="fc" id="L62">    }</span>
+
+    /**
+     * get tax rate of an item in a specific location,
+     * @return tax rate specify from config file.
+     * In case the category of such item is unknown or
+     * the tax rate of a category is unknown, return the default tax rate,
+     * return 0 if no configuration of that location
+     */
+    public double getTaxRate(@NotNull String location, @NotNull String itemName){
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if(taxRateMap.containsKey(location)) {</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">            if(itemCategoryMap.containsKey(itemName) &amp;&amp;</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">                    taxRateMap.get(location).containsKey(itemCategoryMap.get(itemName))){</span>
+<span class="fc" id="L75">                return taxRateMap.get(location).get(itemCategoryMap.get(itemName));</span>
+            }
+<span class="fc" id="L77">            return taxRateMap.get(location).get(&quot;default&quot;);</span>
+        }
+<span class="fc" id="L79">        return 0;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
