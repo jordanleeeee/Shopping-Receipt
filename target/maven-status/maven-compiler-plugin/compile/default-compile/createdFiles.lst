@@ -1,6 +1,0 @@
-shoppingCentre\Product.class
-GenerateReceipt.class
-config\TaxConfig.class
-utils\FileUtils.class
-shoppingCentre\CashierWork.class
-utils\DoubleUtils.class
