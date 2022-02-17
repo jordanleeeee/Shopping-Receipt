@@ -7,6 +7,9 @@ import utils.DoubleUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Jordan
+ */
 public class CashierWork {
     private final List<Product> products = new ArrayList<>();
     private double subtotal = 0;
@@ -32,11 +35,11 @@ public class CashierWork {
 
 
     private double getItemTotal(Product product) {
-        return DoubleUtils.multiply(product.getPrice(), product.getQuantity());
+        return DoubleUtils.multiply(product.price, product.quantity);
     }
 
     private double getItemTax(Product product) {
-        double taxRate = TaxConfigManager.getInstance().getTaxRate(product.getLocation(), product.getName());
+        double taxRate = TaxConfigManager.getInstance().getTaxRate(product.location, product.name);
         double tax = DoubleUtils.multiply(getItemTotal(product), taxRate);
         return DoubleUtils.roundUp(tax);
     }
@@ -52,7 +55,7 @@ public class CashierWork {
         receipt.append("\n");
         for (Product product : products) {
             receipt.append(generateReceiptRow(
-                    product.getName(), String.format("$%.2f", product.getPrice()), String.valueOf(product.getQuantity())
+                    product.name, String.format("$%.2f", product.price), String.valueOf(product.quantity)
             ));
         }
         receipt.append(generateReceiptRow("subtotal:", "", String.format("$%.2f", subtotal)));

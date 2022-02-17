@@ -4,11 +4,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * @author Jordan
+ */
 public class TaxConfigManagerTest {
-    TaxConfigManager taxConfig = TaxConfigManager.getInstance();
+    private final TaxConfigManager taxConfig = TaxConfigManager.getInstance();
 
     @Test
-    public void getConfiguredTaxRateTest(){
+    public void getConfiguredTaxRateTest() {
         assertEquals(taxConfig.getTaxRate("NY", "potato chips"), 0, 0.00001);
         assertEquals(taxConfig.getTaxRate("CA", "potato chips"), 0, 0.00001);
         assertEquals(taxConfig.getTaxRate("NY", "shirt"), 0, 0.00001);
@@ -18,7 +21,7 @@ public class TaxConfigManagerTest {
     }
 
     @Test
-    public void getUndefinedTaxRateTest(){
+    public void getUndefinedTaxRateTest() {
         assertEquals(taxConfig.getTaxRate("LA", "potato chips"), 0, 0.00001);
         assertEquals(taxConfig.getTaxRate("MX", "potato chips"), 0, 0.00001);
         assertEquals(taxConfig.getTaxRate("CA", "iphone"), 0.0975, 0.00001);

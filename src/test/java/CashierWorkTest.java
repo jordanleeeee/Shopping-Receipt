@@ -7,25 +7,27 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
+/**
+ * @author Jordan
+ */
 public class CashierWorkTest {
 
     private final CashierWork cashierWork = new CashierWork();
     private final List<Product> products = new ArrayList<>();
 
-    public CashierWorkTest(){
+    public CashierWorkTest() {
         Product productOne = new Product();
-        productOne.setName("book");
-        productOne.setLocation("CA");
-        productOne.setPrice(17.99);
-        productOne.setQuantity(1);
+        productOne.name = "book";
+        productOne.location = "CA";
+        productOne.price = 17.99;
+        productOne.quantity = 1;
         products.add(productOne);
 
         Product productTwo = new Product();
-        productTwo.setName("potato chips");
-        productTwo.setLocation("CA");
-        productTwo.setPrice(3.99);
-        productTwo.setQuantity(1);
+        productTwo.name = "potato chips";
+        productTwo.location = "CA";
+        productTwo.price = 3.99;
+        productTwo.quantity = 1;
         products.add(productTwo);
     }
 

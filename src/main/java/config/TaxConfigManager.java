@@ -5,6 +5,9 @@ import utils.FileUtils;
 
 import java.util.*;
 
+/**
+ * @author Jordan
+ */
 public class TaxConfigManager {
     private static TaxConfigManager instance = null;
     private static final String configFileLocation = "conf.json";
