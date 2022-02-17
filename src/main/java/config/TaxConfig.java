@@ -11,20 +11,20 @@ import java.util.Map;
  */
 public class TaxConfig {
     @NotNull
-    @JsonProperty("categoriesMap")
+    @JsonProperty(value = "categoriesMap", required = true)
     public Map<String, String> categoriesMap;
 
     @NotNull
-    @JsonProperty("taxRates")
+    @JsonProperty(value = "taxRates", required = true)
     public List<TaxRate> taxRates;
 
     public static class TaxRate {
         @NotNull
-        @JsonProperty("country")
+        @JsonProperty(value = "country", required = true)
         public String country;
 
         @NotNull
-        @JsonProperty("tax")
+        @JsonProperty(value = "tax", required = true)
         public Map<String, Double> taxPerCategory;
     }
 }
