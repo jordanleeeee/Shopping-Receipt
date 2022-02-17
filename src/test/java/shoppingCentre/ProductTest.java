@@ -1,8 +1,9 @@
 package shoppingCentre;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class ProductTest {
 
@@ -46,7 +47,7 @@ public class ProductTest {
 
     @Test
     public void productNotEqualTest(){
-        assertFalse(productOne.equals(productThree));
-        assertFalse(productOne.equals("rubbish"));
+        assertNotEquals(productOne, productThree);
+        assertNotEquals(new Object(), productOne);
     }
 }

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class GenerateReceipt {
-
     public static void main(String[] args){
         System.out.println("please specify the input record file(.csv) path");
         String filePath = new Scanner(System.in).next();
@@ -19,5 +18,4 @@ public class GenerateReceipt {
         System.out.println("generating receipt...");
         System.out.println(cashierWork.generateReceipt());
     }
-
 }

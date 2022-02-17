@@ -1,43 +1,41 @@
 package utils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.opencsv.bean.CsvToBeanBuilder;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 public class FileUtils {
-    public static <T> List<T> readCSVFile(String filePath, int skipLine, Class<T> type) {
+    private static final ObjectMapper MAPPER = new ObjectMapper();
+    public static <T> List<T> readCSVFile(String filePath, int skipLine, Class<T> tClass) {
         try {
             return new CsvToBeanBuilder(new FileReader(filePath))
-                    .withType(type)
+                    .withType(tClass)
                     .withSkipLines(skipLine)
                     .build()
                     .parse();
         } catch (FileNotFoundException e) {
-            System.err.println("cannot find csv file: " + filePath);
-            System.exit(-1);
+            throw new Error("cannot find csv file: " + filePath);
         } catch (Exception e){
-            System.err.printf("parse data in %s to Class: %s error!\n", filePath, type.getName());
-            System.exit(-1);
+            throw new Error(String.format("parse csv data in %s to Class: %s error!\n", filePath, tClass.getName()));
         }
-        return null;
     }
 
-    public static JSONObject readJSONFile(String filePath){
-        JSONParser jsonParser = new JSONParser();
-        try (FileReader reader = new FileReader(filePath)){
-            return (JSONObject)jsonParser.parse(reader);
+    public static <T> T readJSONFile(String filePath, Class<T> tClass){
+        try {
+            return MAPPER.readValue(Files.readString(Path.of(filePath)), tClass);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            System.err.printf("parse json data in %s to Class: %s error!\n", filePath, tClass.getName());
+            System.exit(-1);
         } catch (IOException e) {
-            System.err.println("no such json file: " + filePath);
-            System.exit(-1);
-        } catch (ParseException e) {
-            System.err.println("invalid json file format");
-            System.exit(-1);
+            throw new Error("cannot find csv file: " + filePath);
         }
         return null;
     }

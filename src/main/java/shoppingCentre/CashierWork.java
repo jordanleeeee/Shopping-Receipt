@@ -1,7 +1,7 @@
 package shoppingCentre;
 
-import config.TaxConfig;
-import org.jetbrains.annotations.Nullable;
+import config.TaxConfigManager;
+import org.jetbrains.annotations.NotNull;
 import utils.DoubleUtils;
 
 import java.util.ArrayList;
@@ -15,45 +15,42 @@ public class CashierWork {
     /**
      * add list of product
      */
-    public void registerProducts(@Nullable List<Product> products) {
-        if(products != null){
-            for(Product product: products) {
-                registerProduct(product);
-            }
+    public void registerProducts(@NotNull List<Product> products) {
+        for (Product product : products) {
+            registerProduct(product);
         }
     }
 
     /**
      * add one of product
      */
-    public void registerProduct(@Nullable Product product) {
-        if(product != null){
-            products.add(product);
-            subtotal = DoubleUtils.add(subtotal, getItemTotal(product));
-            tax = DoubleUtils.add(tax, getItemTax(product));
-        }
+    public void registerProduct(@NotNull Product product) {
+        products.add(product);
+        subtotal = DoubleUtils.add(subtotal, getItemTotal(product));
+        tax = DoubleUtils.add(tax, getItemTax(product));
     }
 
 
-    private double getItemTotal(Product product){
+    private double getItemTotal(Product product) {
         return DoubleUtils.multiply(product.getPrice(), product.getQuantity());
     }
 
-    private double getItemTax(Product product){
-        double taxRate = TaxConfig.getInstance().getTaxRate(product.getLocation(), product.getName());
+    private double getItemTax(Product product) {
+        double taxRate = TaxConfigManager.getInstance().getTaxRate(product.getLocation(), product.getName());
         double tax = DoubleUtils.multiply(getItemTotal(product), taxRate);
         return DoubleUtils.roundUp(tax);
     }
 
     /**
      * generate receipt to show product purchase
+     *
      * @return string representation of receipt
      */
-    public String generateReceipt(){
+    public String generateReceipt() {
         StringBuilder receipt = new StringBuilder();
         receipt.append(generateReceiptRow("item", "price", "qty"));
         receipt.append("\n");
-        for(Product product: products){
+        for (Product product : products) {
             receipt.append(generateReceiptRow(
                     product.getName(), String.format("$%.2f", product.getPrice()), String.valueOf(product.getQuantity())
             ));
@@ -64,8 +61,7 @@ public class CashierWork {
         return receipt.toString();
     }
 
-    private String generateReceiptRow(String col1, String col2, String col3){
+    private String generateReceiptRow(String col1, String col2, String col3) {
         return String.format("%-15s%15s%15s\n", col1, col2, col3);
     }
-
 }

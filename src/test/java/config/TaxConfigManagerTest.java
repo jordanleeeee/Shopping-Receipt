@@ -1,10 +1,11 @@
 package config;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
 
-public class TaxConfigTest {
-    TaxConfig taxConfig = TaxConfig.getInstance();
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class TaxConfigManagerTest {
+    TaxConfigManager taxConfig = TaxConfigManager.getInstance();
 
     @Test
     public void getConfiguredTaxRateTest(){
