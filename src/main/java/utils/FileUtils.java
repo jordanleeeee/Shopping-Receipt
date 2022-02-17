@@ -17,7 +17,6 @@ import java.util.List;
 public class FileUtils {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-
     public static <T> List<T> readCSVFile(String filePath, Class<T> tClass) {
         try {
             return new CsvToBeanBuilder<T>(new FileReader(filePath))
