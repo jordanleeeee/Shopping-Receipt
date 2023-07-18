@@ -15,7 +15,7 @@ public class GenerateReceipt {
         System.out.println("loading shopping record...");
         List<Product> products = FileUtils.readCSVFile(filePath, Product.class);
 
-        CashierWork cashierWork = new CashierWork();
+        var cashierWork = new CashierWork();
         System.out.println("cashier work in progress...");
         cashierWork.registerProducts(products);
         System.out.println("generating receipt...");

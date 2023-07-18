@@ -10,9 +10,10 @@ import java.util.*;
  */
 public class TaxConfigManager {
     private static TaxConfigManager instance = null;
-    private static final String configFileLocation = "conf.json";
+    private static final String configFile = "conf.json";
+
     private final Map<String, String> itemCategoryMap;
-    private final HashMap<String, Map<String, Double>> taxRateMap = new HashMap<>();
+    private final Map<String, Map<String, Double>> taxRateMap = new HashMap<>();
 
     public static TaxConfigManager getInstance() {
         if (instance == null) {
@@ -22,7 +23,7 @@ public class TaxConfigManager {
     }
 
     private TaxConfigManager() {
-        TaxConfig taxConfig = FileUtils.readJSONFile(configFileLocation, TaxConfig.class);
+        TaxConfig taxConfig = FileUtils.readJSONFile(configFile, TaxConfig.class);
         itemCategoryMap = taxConfig.categoriesMap;
         for (TaxConfig.TaxRate taxRate : taxConfig.taxRates) {
             taxRateMap.put(taxRate.country, taxRate.taxPerCategory);

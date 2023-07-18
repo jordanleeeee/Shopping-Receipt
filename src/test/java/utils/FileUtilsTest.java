@@ -7,22 +7,23 @@ import shoppingCentre.Product;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * @author Jordan
  */
 public class FileUtilsTest {
     @Test
     public void readCSVFileTest() {
-        String filePath = "src/test/resources/testCSV.csv";
-        List<Product> products = FileUtils.readCSVFile(filePath, Product.class);
-        List<Product> correctProducts = new ArrayList<>();
-        Product productOne = new Product();
-        productOne.name = "book";
-        productOne.location = "CA";
-        productOne.price = 17.99;
-        productOne.quantity = 1;
-        correctProducts.add(productOne);
+        List<Product> products = FileUtils.readCSVFile("testCSV.csv", Product.class);
 
-        Assertions.assertArrayEquals(products.toArray(), correctProducts.toArray());
+        var expectedProduct = new Product();
+        expectedProduct.name = "book";
+        expectedProduct.location = "CA";
+        expectedProduct.price = 17.99;
+        expectedProduct.quantity = 1;
+
+        assertThat(products).hasSize(1);
+        assertThat(products.get(0)).usingRecursiveComparison().isEqualTo(expectedProduct);
     }
 }

@@ -5,25 +5,23 @@ import shoppingCentre.Product;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Jordan
  */
 public class CashierWorkTest {
-
-    private final CashierWork cashierWork = new CashierWork();
     private final List<Product> products = new ArrayList<>();
 
     public CashierWorkTest() {
-        Product productOne = new Product();
+        var productOne = new Product();
         productOne.name = "book";
         productOne.location = "CA";
         productOne.price = 17.99;
         productOne.quantity = 1;
         products.add(productOne);
 
-        Product productTwo = new Product();
+        var productTwo = new Product();
         productTwo.name = "potato chips";
         productTwo.location = "CA";
         productTwo.price = 3.99;
@@ -33,17 +31,19 @@ public class CashierWorkTest {
 
     @Test
     public void addProductsTest() {
+        var cashierWork = new CashierWork();
         cashierWork.registerProducts(products);
         String receipt = cashierWork.generateReceipt();
-        String correctReceipt = "" +
-                "item                     price            qty\n" +
-                "\n" +
-                "book                    $17.99              1\n" +
-                "potato chips             $3.99              1\n" +
-                "subtotal:                              $21.98\n" +
-                "tax:                                    $1.80\n" +
-                "total:                                 $23.78\n";
-        assertEquals(receipt, correctReceipt);
+        String expectedReceipt = """
+                item                     price            qty
+
+                book                    $17.99              1
+                potato chips             $3.99              1
+                subtotal:                              $21.98
+                tax:                                    $1.80
+                total:                                 $23.78
+                """;
+        assertThat(receipt).isEqualTo(expectedReceipt);
     }
 
 }

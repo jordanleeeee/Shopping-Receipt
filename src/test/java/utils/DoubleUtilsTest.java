@@ -2,7 +2,7 @@ package utils;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Jordan
@@ -10,22 +10,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class DoubleUtilsTest {
     @Test
     public void roundUpTest() {
-        assertEquals(DoubleUtils.roundUp(1.13), 1.15, 0.01);
-        assertEquals(DoubleUtils.roundUp(1.16), 1.20, 0.01);
-        assertEquals(DoubleUtils.roundUp(1.151), 1.20, 0.01);
+        assertThat(DoubleUtils.roundUp(1.13)).isEqualTo(1.15);
+        assertThat(DoubleUtils.roundUp(1.16)).isEqualTo(1.20);
+        assertThat(DoubleUtils.roundUp(1.151)).isEqualTo(1.20);
     }
 
     @Test
     public void addTest() {
-        assertEquals(DoubleUtils.add(1.13, 1.14), 2.27, 0.01);
-        assertEquals(DoubleUtils.add(1.99, 0.02), 2.01, 0.01);
-        assertEquals(DoubleUtils.add(2.55, 0.45), 3, 0.01);
+        assertThat(DoubleUtils.add(1.13, 1.14)).isEqualTo(2.27);
+        assertThat(DoubleUtils.add(1.99, 0.02)).isEqualTo(2.01);
+        assertThat(DoubleUtils.add(2.55, 0.45)).isEqualTo(3);
     }
 
     @Test
     public void multiplyTest() {
-        assertEquals(DoubleUtils.multiply(1.13, 1.14), 1.2882, 0.0001);
-        assertEquals(DoubleUtils.multiply(0.5, 0.5), 0.25, 0.01);
-        assertEquals(DoubleUtils.multiply(0.24, 0.5), 0.12, 0.01);
+        assertThat(DoubleUtils.multiply(1.13, 1.14)).isEqualTo(1.2882);
+        assertThat(DoubleUtils.multiply(0.5, 0.5)).isEqualTo(0.25);
+        assertThat(DoubleUtils.multiply(0.24, 0.5)).isEqualTo(0.12);
     }
 }

@@ -2,7 +2,7 @@ package config;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Jordan
@@ -12,20 +12,20 @@ public class TaxConfigManagerTest {
 
     @Test
     public void getConfiguredTaxRateTest() {
-        assertEquals(taxConfig.getTaxRate("NY", "potato chips"), 0, 0.00001);
-        assertEquals(taxConfig.getTaxRate("CA", "potato chips"), 0, 0.00001);
-        assertEquals(taxConfig.getTaxRate("NY", "shirt"), 0, 0.00001);
+        assertThat(taxConfig.getTaxRate("NY", "potato chips")).isEqualTo(0);
+        assertThat(taxConfig.getTaxRate("CA", "potato chips")).isEqualTo(0);
+        assertThat(taxConfig.getTaxRate("NY", "shirt")).isEqualTo(0);
 
-        assertEquals(taxConfig.getTaxRate("NY", "pencils"), 0.08875, 0.00001);
-        assertEquals(taxConfig.getTaxRate("CA", "shirt"), 0.0975, 0.00001);
+        assertThat(taxConfig.getTaxRate("NY", "pencils")).isEqualTo(0.08875);
+        assertThat(taxConfig.getTaxRate("CA", "shirt")).isEqualTo(0.0975);
     }
 
     @Test
     public void getUndefinedTaxRateTest() {
-        assertEquals(taxConfig.getTaxRate("LA", "potato chips"), 0, 0.00001);
-        assertEquals(taxConfig.getTaxRate("MX", "potato chips"), 0, 0.00001);
-        assertEquals(taxConfig.getTaxRate("CA", "iphone"), 0.0975, 0.00001);
-        assertEquals(taxConfig.getTaxRate("NY", "airPod"), 0.08875, 0.00001);
+        assertThat(taxConfig.getTaxRate("LA", "potato chips")).isEqualTo(0);
+        assertThat(taxConfig.getTaxRate("MX", "potato chips")).isEqualTo(0);
+        assertThat(taxConfig.getTaxRate("CA", "iphone")).isEqualTo(0.0975);
+        assertThat(taxConfig.getTaxRate("NY", "airPod")).isEqualTo(0.08875);
     }
 
 }
