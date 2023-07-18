@@ -28,7 +28,7 @@ public class FileUtils {
 
     public static <T> T readJSONFile(String resource, Class<T> tClass) {
         try {
-            return MAPPER.readValue(getInputStream(resource).readAllBytes(), tClass);
+            return MAPPER.readValue(getInputStream(resource), tClass);
         } catch (JsonProcessingException e) {
             throw new Error(String.format("parse json data in %s to Class: %s error!", resource, tClass.getName()));
         } catch (IOException e) {
