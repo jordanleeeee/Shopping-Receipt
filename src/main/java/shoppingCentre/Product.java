@@ -2,7 +2,6 @@ package shoppingCentre;
 
 import com.opencsv.bean.CsvBindByName;
 
-
 /**
  * @author Jordan
  */

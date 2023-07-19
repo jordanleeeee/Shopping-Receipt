@@ -3,7 +3,8 @@ package config;
 import org.jetbrains.annotations.NotNull;
 import utils.FileUtils;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Jordan
